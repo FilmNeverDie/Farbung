@@ -92,8 +92,8 @@ Any other suggestions
 
  
 
-## Liscence: 
+## LICENSE: 
 This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
-see License.md for details 
+see LICENSE.md for details 
 
  
