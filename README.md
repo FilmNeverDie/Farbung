@@ -94,6 +94,6 @@ Any other suggestions
 
 ## LICENSE: 
 This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
-see [LICENSE.md](LICENSE.md) for details 
+see [LICENSE](LICENSE.md) for details 
 
  
