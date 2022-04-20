@@ -1,4 +1,6 @@
 # Farbung
+
+Färbung means colouring in German, and all these effor are infact a way of colouring, thus Färbung. 
 A open source project based on FilmNeverDie's CP800 film processing machine.
 
 Project: CP800 
