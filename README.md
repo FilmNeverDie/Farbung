@@ -9,7 +9,7 @@ This project is initialized and managed by FIlmeNeverDie. Here, we introduce a r
 
  
 
-Project structure 
+## Project structure 
  
 The project is separated into sections: hardware, firmware, and software 
 
@@ -29,7 +29,7 @@ There will be a list of verified models and compatibility table that shows the c
 
  
 
-Getting Started 
+## Getting Started 
 
 Installations 
 
@@ -60,7 +60,7 @@ N/A
 
  
 
-Getting Involved 
+## Getting Involved 
 
 The following are areas where we are currently working on: 
 
@@ -92,7 +92,7 @@ Any other suggestions
 
  
 
-Liscence: 
+## Liscence: 
 This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
 see License.md for details 
 
