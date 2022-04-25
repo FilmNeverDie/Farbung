@@ -33,7 +33,7 @@ There will be a list of verified models and compatibility table that shows the c
 
 Installations 
 
-###Firmware: 
+### Firmware: 
 
 Arduino IDE 
 with libraries: 
@@ -44,13 +44,13 @@ DallasTemperautre + OneWire
 
 Get the newest stable version of source code and upload to the arduino, please check the hardware version of your machine if you purchased from FND, and download the respective firmware. 
 
-###Hardware: 
+### Hardware: 
 Mechanical:
 Fusion 360 
 Electronics:
 KiCAD5
 
-###Software:
+### Software:
 
 N/A 
 
