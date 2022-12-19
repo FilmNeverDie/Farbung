@@ -2,7 +2,6 @@ site_name: FilmNeverDie — CP800 Wiki
 site_url: https://r-tae.github.io/farbung/
 nav:
     - Home: index.md
-    - About: about.md
     - Software: software.md
     - Circuit:
         - Description: circuit/index.md
