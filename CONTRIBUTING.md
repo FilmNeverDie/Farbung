@@ -1,5 +1,7 @@
-# CONTRIBUTING 
+# CONTRIBUTING
+
 Firstly, Thanks for consideration contributing to the project. Here is where we keep film cameras alive by empowering everyone with the power to process film themselves.  
+
 We are mainly looking for the following contribution: 
 1.	Working on the issue tracker 
 2.	Testing and reporting of a derived setup 

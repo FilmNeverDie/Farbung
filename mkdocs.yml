@@ -1,0 +1,16 @@
+site_name: FilmNeverDie — CP800 Wiki
+site_url: https://r-tae.github.io/farbung/
+nav:
+    - Home: index.md
+    - About: about.md
+    - Software: software.md
+    - Circuit:
+        - Description: circuit/index.md
+        - "v0.9": circuit/v0_9.md
+        - "v0.92": circuit/v0_92.md
+    - Advanced:
+        - 'Writing programs with Arduino script': advanced/arduino_process_gen.md
+    # NOTE: this section left commented for future reference
+    # - Variations:
+    #     - About: about_variations.md
+theme: readthedocs

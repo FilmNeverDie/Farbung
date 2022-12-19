@@ -6,7 +6,6 @@ A open source project based on FilmNeverDie's CP800 film processing machine.
 Project: CP800 
 
 This project is initialized and managed by FIlmeNeverDie. Here, we introduce a rotating drum film developer. Film developing machines are getting outdated and they have run out of support, so the project aims to introduce a series of products that could replace old equipment that has no support and is hard to get replacement/maintenance services. This project provides the resources available for on-going maintenance and product support for film processing within an open-source community, so that anyone can pick up the role as a supplier and maker. We also welcome users to make their own adaptation since the need for each user might be different and the existing variation may not be ideal for each application. Please see CONTIRBUTION for how you can contribute to an existing project, or branch off to your own variant of the machine.  
-
  
 
 ## Project structure 
@@ -19,15 +18,10 @@ Firmware includes the codes for programming the microcontroller, and its respect
 
 Software includes any software that enhance any parts of either the machines or film processing such as simulation, check system integrity and firmware auto-update, the processing programs generators, photo scanning and processing software and their respective documentation such as change log, license, dependency. 
 
- 
 
 Contributors will be expected writing and updating the manuals for their own variation.  
 
 There will be a list of verified models and compatibility table that shows the combination of hardware/firmware/software compatible in the front page of each project.  
-
-  
-
- 
 
 ## Getting Started 
 
@@ -35,12 +29,11 @@ Installations
 
 ### Firmware: 
 
-Arduino IDE 
-with libraries: 
+Arduino IDE with libraries: 
 
-USB Host shield Library 2.0  
+- USB Host shield Library 2.0  
 
-DallasTemperautre + OneWire 
+- DallasTemperautre + OneWire 
 
 Get the newest stable version of source code and upload to the arduino, please check the hardware version of your machine if you purchased from FND, and download the respective firmware. 
 
@@ -84,10 +77,14 @@ A computer application that searches for the newest firmware to download from Gi
 
 Any other suggestions 
 
- 
+## Documentation
+
+This repo uses [mkdocs](https://www.mkdocs.org) to host online documentation. `mkdocs.yml` is its configuration file, and `docs/` is the directory containing the documentation pages.
 
 ## LICENSE: 
-This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
-see LICENSE.md for details 
+
+This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License, except for source code which is licensed under the 3-Clause BSD License.
+
+see LICENSE.md and LICENSE_CC-BY-SA.md for details 
 
  
