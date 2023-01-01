@@ -25,8 +25,6 @@
 3.	Processing movie films
     -	A list of requirements
 4.	Roller transport / pull-thru
-    -	Refurbish / fixing (do not include this in github)
-        -	Rebuild compatible circuit with new and more accessible
     -	Brand new model: (include this in github)
 5.	Scanner (include this in github)
     -	Graphic card fails often
