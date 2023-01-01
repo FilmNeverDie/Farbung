@@ -1,0 +1,10 @@
+Comment,Designator,Footprint,LCSC
+"MountingHole","H1,H2,H3,H4,H6,H7","MountingHole:MountingHole_3.2mm_M3",""
+"MountingHole","H5","MountingHole:MountingHole_4.5mm",""
+"1k-0.25W","R53","Resistor_SMD:R_1206_3216Metric","C4410"
+"R_Potentiometer_Trim","RV1","Potentiometer_SMD:VG039NCHXTB102","C128543"
+"ML6-H4K12PGVA","SW1","Button_Switch_THT:ML6-H4","C225014"
+"TS-1103S-B-G","SW2,SW3,SW4,SW5,SW6,SW7","Button_Switch_SMD:TS-1103S-X-X","C480306"
+"321010SG0ABK00A01","UI_PCB_in1","Connector_IDC:IDC-Header_2x05_P2.54mm_Vertical","C49661"
+"JST_XH-A-1x10","lcd_short_in1","Connector_JST:JST_XH_B10B-XH-A_1x10_P2.50mm_Vertical","C144400"
+"Conn_01x16","lcd_socket1","Connector_PinHeader_2.54mm:PinHeader_1x16_P2.54mm_Vertical","C49661"
