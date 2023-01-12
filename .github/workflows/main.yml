@@ -1,6 +1,6 @@
- 
 name: Publish docs via GitHub Pages
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -15,7 +15,10 @@ jobs:
     steps:
       - name: Checkout main
         uses: actions/checkout@v2
-  
+
+      - name: install mkdocs
+        run: echo 'mkdocs' > requirements.txt
+
       - name: Deploy docs
         uses: mhausenblas/mkdocs-deploy-gh-pages@nomaterial
         env:
