@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://FilmNeverDie.github.io/Farbung/advanced/arduino_process_gen/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Writing programs with Arduino script - FilmNeverDie — CP800 Wiki</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Writing programs with Arduino script";
+        var mkdocs_page_input_path = "advanced/arduino_process_gen.md";
+        var mkdocs_page_url = "/Farbung/advanced/arduino_process_gen/";
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> FilmNeverDie — CP800 Wiki
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../software/">Software</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Circuit</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../circuit/">Description</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../circuit/v0_9/">v0.9</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../circuit/v0_92/">v0.92</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Advanced</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Writing programs with Arduino script</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#step-1-setup-the-constants">Step 1: Setup the constants</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#step-2-filling-in-the-parameters">Step 2: filling in the parameters</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">FilmNeverDie — CP800 Wiki</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Advanced &raquo;</li>
+      <li>Writing programs with Arduino script</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="instruction-writing-program-with-arduino-script">Instruction: writing program with Arduino script</h1>
+<p>This is for developers and makers only; the SD card should be programmed
+with a more user-friendly method such as web apps. this Arduino script
+used to program the SD card is for generating examples for testing the
+functionality of loading programs from Sd card, as the name suggests, it
+is made to test to store program on SD cards.</p>
+<p>Please locate the arduino code: <code>test_storeProgams.ino</code>, and make a copy
+for you to change the programs. Keep the original file, so it is a
+backup.</p>
+<p>Please follow the hookup guide to setup the hardware and Arduino before
+you make a change to the script. We are using the big SD module, but
+they all work in the same way as long as they are hooked up correctly
+for the SPI communication.</p>
+<p><a href="https://randomnerdtutorials.com/guide-to-sd-card-module-with-arduino/">https://randomnerdtutorials.com/guide-to-sd-card-module-with-arduino/</a></p>
+<p><a href="https://create.arduino.cc/projecthub/electropeak/sd-card-module-with-arduino-how-to-read-write-data-37f390">https://create.arduino.cc/projecthub/electropeak/sd-card-module-with-arduino-how-to-read-write-data-37f390</a></p>
+<h2 id="step-1-setup-the-constants">Step 1: Setup the constants</h2>
+<p>There are three sections of constants you need to define just after the
+headers</p>
+<p><img alt="" src="../images/media/image1.png" /></p>
+<p>The first set is the pin assignment for the SD card port, please refer
+to the Arduino board for the pin number of the SPI communication</p>
+<p>The second section only has one constant that is the name of the file
+where you stored the programs, on default it should be a misspelt
+document called "progroms.txt", this file could also be renamed later
+use a PC by editing the filename.</p>
+<p><img alt="" src="../images/media/image2.png" /></p>
+<p>The last section is the file specific constant, these describe the
+general configuration for all the programs hold in this file</p>
+<p>The constant of numberofprogram indicates the number of programs you
+wish to store in the fie. The constant array of stepName is a lookup
+table for the stepCode to indicate what each step is in each process,
+please expand the list of stepName with as many variations of step you
+have on your machine.</p>
+<h2 id="step-2-filling-in-the-parameters">Step 2: filling in the parameters</h2>
+<p>There are two set of parameters that need to be filled out, one set is
+for each processprogram on the programlist. These parameters describe
+the processes of all programs in the files.</p>
+<p><img alt="" src="../images/7d47c2f5241d043d94f628ff796c6be0299ad1f5.png" /></p>
+<p>The structure of <code>processProgram</code> contain a
+<code>processName</code>, the duration of the entire process, the number of steps in
+the process, and the temperature of the entire process, following by the
+pointer to an array of process steps that contain the parameters of each
+step.</p>
+<p>Change these parameter is the <code>setup()</code> section of the code.
+<code>ProcessProgram</code> should be right after <code>Serial.begin(115200)</code>;</p>
+<p><img alt="" src="../images/c5f931f9795e1636493052dc578a2fd798c86328.png" /></p>
+<ol>
+<li>
+<p>Name your program within the ProgramList array for each processName
+    variable. This could be any name as long as it is below 20
+    characters long</p>
+<blockquote>
+<p>NOTE: due to the constraint of the memory on the Arduino, it could only
+load up to 6 different programs, so <code>ProgramList[6]</code> and
+<code>ProgramList[7]</code> will never get use.</p>
+</blockquote>
+</li>
+<li>
+<p>for each program, type the duration in second to the duration
+    variable in each <code>ProgramList</code>. Min value: 0, max value: 65,535</p>
+</li>
+<li>
+<p>type the number of step for each program on <code>ProgramList</code> array.
+    Min value: 1, max value: 255</p>
+</li>
+<li>
+<p>type the temp for each program on <code>ProgramList</code> array. Min value:
+    1, max value: 255</p>
+</li>
+</ol>
+<p>There is no need to define the processes now, we will do it in the next
+section.</p>
+<p><img alt="" src="../images/fa422487b8ade3d491a7c42c476f4b0ec7983b3d.png" /></p>
+<p>The other set is for each step within each
+program on the program list.</p>
+<p>In each step of the process, the step contains the stepcode where
+<code>stepName[stepcode]</code> return the name of the step, the input tank number,
+the duration of the step where the film is bath in the chemical, and the
+output tank number, and a flag to indicate whether the step can be
+push/pull.</p>
+<p><img alt="" src="../images/a6431f08458b68865b8b2d1e0fe8af70ba04202b.png" /></p>
+<p>Please copy and paste each line for the variables: <code>stepcode</code>, <code>inputtank</code>,
+<code>outputtank</code>, <code>duration</code>, <code>push</code> to the number of steps you define in the
+program section. And then change the value of each variable within the
+structure.</p>
+<p>The default code contains 8 different programs and the value for the
+parameters are placeholder values. Please add more by copy and pasting
+the entire list of steps for each program to the number of programs you
+defined in Step 1. Please remember to change the index of <code>ProgramList</code> so
+you are writing a new program in the list not overwrite the old one you
+copied the list of steps from.</p>
+<p>For each step, the 5 variables of each step have to be filled within
+each program. The index should be consistent with the number of steps
+you defined in the respective index of program on the ProgramList. The
+default should be a long list of placeholder values. Please edit the
+code so that the index of process is consistent with the numberofstep
+variable defined. None of the step should be skipped or left blank.
+These steps should be repeated for each program on the ProgramList.</p>
+<p>1)  Step code is the code representing the name of the step from the
+    <code>stepName[]</code> array defined in Step 1. min value: 0, max value: 255</p>
+<p>2)  <code>inputtank</code> is the solenoid valve you want your step to use for the
+    input chemical, CP800 only has 6 input port, so the valid range of
+    value is 1-6 inclusive, any other number will cause error. min
+    value: 1, max value: 6</p>
+<p>3)  <code>outputtank</code> is the solenoid valve you want your step to use for the
+    output chemical, CP800 only has 6 input port, so the valid range of
+    value is 1-6 inclusive, any other number will cause error. min
+    value: 1, max value: 6</p>
+<p>4)  Duration is the duration for the step, do not confuse it with the
+    duration for the program you defined for the program. Min value: 0,
+    max value: 65,535</p>
+<p>5)  Push indicate whether the step is pushable, 0 mean no, and 1 is yes.
+    If the step is pushable, the push and pull value given before the
+    start of the processing will affect the duration of this step, only
+    accept 0 or 1 value, anything bigger than 1 is equal to 1. min
+    value:0, max value:1</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../circuit/v0_92/" class="btn btn-neutral float-left" title="v0.92"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../../circuit/v0_92/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://FilmNeverDie.github.io/Farbung/software/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Software - FilmNeverDie — CP800 Wiki</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Software";
+        var mkdocs_page_input_path = "software.md";
+        var mkdocs_page_url = "/Farbung/software/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> FilmNeverDie — CP800 Wiki
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Software</a>
+    <ul class="current">
+    </ul>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Circuit</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../circuit/">Description</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../circuit/v0_9/">v0.9</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../circuit/v0_92/">v0.92</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Advanced</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../advanced/arduino_process_gen/">Writing programs with Arduino script</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">FilmNeverDie — CP800 Wiki</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Software</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="software">Software</h1>
+<blockquote>
+<p>NOTE: this section needs a major overhaul, to make it more developer friendly</p>
+</blockquote>
+<p>The user manual has information regarding how to operate the machine. This document is for developers by explaining how the code functions and is structured.</p>
+<p>There are a lot of iterations of firmware that are applicable to the microcontroller in CP800. Much of the code is shared between all iteration of the firmware. This document will break the firmware by its function and explain each part of it. There is a log of changes written inside the beginning of the main code so developers track when a feature/function was implemented. Of course, that is not the most comprehensive log, so there might be changes that happened between the recorded date. For the sake of documentation, we assume all data recorded on the log is the date of a committed version of the firmware and all changes to between the commits happen on the latest commit.</p>
+<h1 id="main-headers">Main Headers</h1>
+<pre><code class="language-c">#define model &quot;CP-806&quot;
+#define version &quot;1.16.2&quot;
+#define PCBver 9
+// sense =0 for NO sensor, and =1 for NC sensor
+#define OUTsense 0// change this to 1 when use the new flow sensor with the metal band and cable tie
+#define INsense 0
+</code></pre>
+<p>At the beginning of the code there is a section before the log. This section contains <code>#define</code> for the machine. “model” and “version” are not used functionally as of 8th June 2022. However, PCBver is used to define the pinout for the Dpad and user interface inputs. Since there are two functional PCB being used by CP800 as of 8th June 2022. OUTsense and INsense, is used to defined whether the tank level sensor and flow out sensor are normally open (NO), or normally closed (NC) signal. In the future, more metadata could be defined here so other supporting software could identify the machine and hardware associated with that specific model and version of machine.</p>
+<pre><code class="language-c">//#define DEBUG //enable/disable serial debug output
+#ifdef DEBUG
+#define DEBUG_PRINT(x) Serial.print(x)
+#define DEBUG_PRINTDEC(x) Serial.print(x, DEC)
+#define DEBUG_PRINTbin(x,y) Serial.print(x, y)
+#define DEBUG_PRINTbinln(x,y) Serial.println(x, y)
+#define DEBUG_PRINTln(x) Serial.println(x)
+#else
+#define DEBUG_PRINT(x)
+#define DEBUG_PRINTDEC(x)
+#define DEBUG_PRINTbin(x,y)
+#define DEBUG_PRINTbinln(x,y)
+#define DEBUG_PRINTln(x)
+#endif
+</code></pre>
+<p><code>#define DEBUG</code> serial print via Arduino COM. This allows a global disable on all serial print functions when we don’t want to be debugging. Note that there are still some <code>serial.print</code> functions not controlled by this declaration.</p>
+<pre><code class="language-c">void EditsParameters(int editIndex,int arrayIndex,int * Para,int push);
+</code></pre>
+<p>There is one function declaration before the main. This function is used to edit existing processing in the ROM. This function required the following dependencies:</p>
+<ul>
+<li>The data type of ROMProgram <code>struct</code></li>
+<li>And Arduino basic library.</li>
+</ul>
+<blockquote>
+<p>:information_source: NOTE: it is planned to modularize the ROM processing code to have a separate file and header.</p>
+</blockquote>
+<p>The section below the comment:</p>
+<pre><code class="language-c">// button assignment
+</code></pre>
+<p>is for the position of each button on the Dpad to the R-2R DAC.
+Then the libraries are included below the line:</p>
+<pre><code class="language-c">// includes library
+</code></pre>
+<p>Four libraries are active as of 8th June 2022</p>
+<pre><code class="language-c">#include &quot;classes.h&quot;
+#include &quot;CP800.h&quot;
+#include &lt;OneWire.h&gt;
+#include &lt;DallasTemperature.h&gt;
+</code></pre>
+<p><code>CP800.h</code> and <code>classes.h</code> are defined within the Arduino script folder. LiquidCrystal , <code>OneWire.h</code> + <code>DallasTemperature.h</code> could be installed and updated with libraries manager on Arduino IDE.</p>
+<p>Following the comment:</p>
+<pre><code class="language-c">//pin assignment
+</code></pre>
+<p>Are the pin assignments for most GPIO for joystick shield, SPI com, motor interface, valves interface, buzzer, fluid sensors.
+For the button variables:</p>
+<pre><code class="language-c">byte UIcommend; // debounced byte commend to the system from UI inputs
+byte UIinputs; // before debounced
+int de_button;// debounced signal from the Dpad buttons
+int editing = 0; // default program editing is off
+int menu_skipupdate=0;
+</code></pre>
+<p><code>UIcommned</code>, is the debounced 8 bits signal for the microcontroller, this includes the buttons digital inputs with the 6 MSBs. The 2nd LSB indicated whether the cursor can travel through the columns, whereas the LSB indicated whether the cursor can travel through the rows.</p>
+<p><code>UIinputs</code> are the raw signal from the 6 inputs from Dpad</p>
+<p><code>de_button</code> is the debounced signal for UIinputs</p>
+<p>Editing is a flag to indicate whether the user is in editing mode or not, see “editing processing” in the user manual.</p>
+<p><code>menu_skipupdate</code> is a flag to control whether the menu is being updated or skipped. Might use a better name</p>
+<p>These variables are mainly interfacing with the <code>UIcursor</code> and <code>UImap</code> classes which contain the information where the cursor is on the menu, and where in the mapping of the menu. The final inputs are input to the <code>buttonAction</code> subroutine, where the microcontroller reacts to the new inputs every program cycle.</p>
+<pre><code class="language-c">//LCD
+#include &lt;LiquidCrystal.h&gt;
+#define rs 42
+#define ee 43
+#define d4 44
+#define d5 45
+#define d6 46
+#define d7 47 //LCD Pin
+#define bl 36
+LiquidCrystal lcd(rs, ee, d4, d5, d6, d7);
+</code></pre>
+<p>For the LCD, a new library is included, <code>LiquidCrystal.h</code>, and a set of pin assignment is <code>#define</code> correspondingly to the object imitation of the LCD, see LiquidCrystal object constructor for how to initiate a LCD object with the library.</p>
+<pre><code class="language-c">char lcdBuff0[21];
+char lcdBuff1[21];
+char lcdBuff2[21];
+char lcdBuff3[21];
+char lcdBuffPrevious0[21];
+char lcdBuffPrevious1[21];
+char lcdBuffPrevious2[21];
+char lcdBuffPrevious3[21];
+</code></pre>
+<p>The LCD screen used has 4 rows of 20 characters. Four <code>lcdbuffer</code> are made to store each position of the LCD. Four more are made to store the previous screen which are currently not used.</p>
+<pre><code class="language-c">//menu
+//menu structure see attached document
+int menuRow = 0;
+int menuColumn = 0;
+int infopage = 0; //there will be multiple info page as we expand the complexity
+const String menuTop[] = { //top tier menu text
+...}
+const String menuSetting[] = { //declear settings menu
+...}
+</code></pre>
+<p><code>menuRow</code> is the row number that the cursor/mapping is currently in
+<code>menuColumn</code> is the column number that the cursor/mapping is currently in
+Infopage is the page number that the user is currently viewing
+<code>menuTop</code> is a character array with words that are shown on the top menu
+<code>menuSetting</code> is a character array with words that are shown on the setting menu</p>
+<pre><code class="language-c">//edit menu
+int editIndex = 0;
+int editPara[19]; // edipara is a array, mostly will be only using the first entry
+int arrayIndex = 0;
+bool editmenuEnd=0;
+</code></pre>
+<p>Three variables are declared under editing menu. These variables are used when the user is in editing ROM program mode.</p>
+<p><code>editIndex</code> is the index that indicates the current variable the user is editing. Please see EditsParameters function to see how the entire processing program is flattened and how each data is indexed</p>
+<p><code>editPara</code> is the value which the index is referring to. There are several types of datatypes, depending on the indexing the data in the array interpreted as different data type, please refer to EditsParameters function for future information</p>
+<p><code>arrayIndex</code> is the index for the character array, processName[].</p>
+<p><code>editmenuEnd</code> is a flag for rather the edit menu reached the end or not</p>
+<pre><code class="language-c">//I/O Check
+bool outputCheckAction = 0;
+//Input/Output Check Mode
+bool IOCheckMode = 0;
+int IOIndex = 0;
+
+</code></pre>
+<p>Three variables are declared to be used when the user is in the IO check mode in the setting menu, see user manual for how to navigate to the IOcheck menu</p>
+<p><code>outputCheckAction</code> toggles the action state of each active element of the machine from the menu, typically the component is switched on when this value is 1, such as motor, pump, valve ...etc</p>
+<p><code>IOCheckMode</code> indicates if the program is in the IO check menu. This enables the IOIndex to be changed, because the program has entered IO check mode</p>
+<p><code>IOIndex</code> is the index that shows which input or output the user is currently checking. Refer to inputCheck() and outputCheck() to see how all inputs and outputs are arranged into an array.</p>
+<pre><code class="language-c">//declear process matrix
+String processPara[8][20] = { //6 process + 2 clean process
+  {}, {}, {}, {}, {}, {}, {}, {}
+};
+int processTemp[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+uint16_t processTime[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+uint8_t processTotalSteps[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+bool processParaSet[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+//process name
+String processName[6] = {&quot;---&quot;, &quot;---&quot;, &quot;---&quot;, &quot;---&quot;, &quot;---&quot;, &quot;---&quot;};
+</code></pre>
+<p><code>processPara</code> is an array of 8 with 20 strings each. String is used here because it is made using the old data format where all parameters are compiled into a String datatype</p>
+<p><code>processTemp</code> is the temperature value for each process</p>
+<p><code>processTime</code> is the duration of each process</p>
+<p><code>processTotalSteps</code> is the number of steps in each process</p>
+<p><code>processParaSet</code> is the flag that say whether the process has be set (loaded from storage)</p>
+<p><code>processName</code> is the name of the process</p>
+<pre><code class="language-c">//processing data
+//timer
+unsigned long timer = 0; //system timer (mS)
+long timeJump = 0; //jump forward time for testing (mS)
+#define iniDelay 200 //delay in setup (mS)
+</code></pre>
+<p>Then we will introduce all the data use in processing</p>
+<p>For timers:
+Long timer is a system timer where it will update every loop</p>
+<p><code>timeJump</code> is an accumulated varaibles that will increase or decrease the timer values (currently unused)</p>
+<p><code>iniDelay</code> is the delay amount in ms introduce in the for several component when machine is booting up. These include loading processes from ROM, initiating LED, initiating motor.</p>
+<pre><code class="language-c">//refresh timer for lcd etc.
+unsigned long refreshTimerA = 0; //timer for less frequent refresh (ms)
+unsigned long refreshTimerB = 0; //timer for frequent refresh (ms)
+#define refreshInterval 500 //time for lcd refresh (ms)
+</code></pre>
+<p><code>refreshTimerA</code> regulate what get update, currently it is at 4 times of <code>refreshInterval</code> which is 2s. These processes are LED, LCD, read temperature
+<code>refreshTimerB</code> regulates what get updated, currently it is at refresh interval rate which is 0.5s. These processes are controlling the motor, controlling the processing, or the cleaning process.</p>
+<pre><code class="language-c">//agitation
+byte agitationSpeed = 0; //0: ~20RMP 1: ~18RMP 2: ~16RPM
+unsigned long agitationTimer = 0; // S
+const int agitationTime1 = 10; // S
+const int agitationTime2 = 2; // S
+</code></pre>
+<p><code>agitationSpeed</code> determines the speed setting of the motor, this could be expanded to the values of a byte</p>
+<p><code>agitationTimer</code> is not used</p>
+<p><code>agitationTime1</code> and <code>agitationTime2</code> are used to create the pattern of motion during processing. The pattern is forward, stop, backward and stop, then repeat.</p>
+<pre><code class="language-c">//parameter of process
+bool processState; //process runing state (0:not running 1:running)
+int processNo; //runing process (0-7)
+bool steppingmode=0; //default =0 : sensor mode, 1= fixed timer
+unsigned long processStartTime = 0; //start time of current process
+</code></pre>
+<p><code>processState</code> is the flag showing whether the machine is running a processing or not</p>
+<p><code>processNo</code> shows which process from the menu is selected to be processing</p>
+<p><code>steppingmode</code> shows how the steps in a process are going to progress. Sensor mode means the step progress to the next step depending on the feedback sensor, fixed timer means the step progress to the next only depending on a fixed amount of time.</p>
+<p><code>processStartTime</code> marks the timer instance where a new processing has begun.</p>
+<pre><code class="language-c">//parameter of clean process
+byte processStateClean; //process runing state for clean process (0: not runing 1: clean 1 process 2: clean 2 process)
+byte processCleanCycles;
+</code></pre>
+<p>There are supposed to be two cleaning processes, they are both currently not programmed. From the order of adding and removing fluid. Clean 1 is having the both add and remove are active depending on a processing array.</p>
+<pre><code class="language-c">//parameters for current step
+bool stepState = 0; //step state (0: processing of this step is not done 1: processing of this step is done, ready to drain tank)
+String stepName[20] = {&quot;----&quot;};
+uint8_t stepNo = 0;
+uint8_t stepIn[20]; //which port to add chem
+uint16_t stepTime[20]; //time for processing (S)
+uint8_t stepOut[20]; //which port to dump chem
+bool stepPush[20]; //if this step is subject to push/pull 0:no 1:yes
+bool flowin=0;
+bool flowout=0;
+int stepout = 0; // use to record what stepOut[stepNo] is, unused
+unsigned int stepTimer1 = 0; // begining of adding chem
+unsigned int stepTimer2 = 0; // beigning of process the drum, stopped adding chem
+unsigned int stepTimer3 = 0; // begining of removing chem, stpped the drum
+bool stepParaSet=0; //flag of step paratmeter are set, and ready to go
+//push/pull
+int push = 0; // the value of push/pull selected on the menu (this is loaded into the processing later)
+</code></pre>
+<p>Within the processing, each step has timing and parameters that define their actions.</p>
+<p><code>stepState</code> shows whether the processing of the film in this step is done, if done start draining tank fluid and prepare for the next step</p>
+<p><code>stepNo</code> shows sequential order the step is in the processing</p>
+<p>StepName shows the name for a step</p>
+<p><code>stepIn</code> and <code>stepOut</code> shows which valve port which are used in the step</p>
+<p><code>stepTime</code> is the duration of the step</p>
+<p><code>stepPush</code> enable/disable the step to be pushed/pulled. Push: increase time of processing of this step, pull: reduce time of processing of this step</p>
+<p><code>flowin</code> is a flag made to force the chemical to flow in by the user at any time during the step which the processing is currently in</p>
+<p><code>flowout</code> is a flag to force the chemical to flow out of port 6 during the process, this is used for emergency flow out in case the other valves are somehow blocked during the processing. Please refer to the user manual.</p>
+<p>Stepout is supposed to record the value of stepOut the processing was, so that an interrupted operation could be done and yet the processing could continue by pushing this variable back into stepOut (currently unused)</p>
+<p><code>stepTimer1</code> is use to time the adding chemical stage of the step</p>
+<p><code>stepTimer2</code> is use to time the rolling processing stage of the step</p>
+<p><code>stepTimer3</code> is use to time the removing chemical stage of the step</p>
+<p><code>stepParaSet</code> shows whether the step parameters are loaded and ready to go</p>
+<p><code>push</code> is the value of how much time are increase/decrease (push or pull) for all the pushable steps in the current processing</p>
+<pre><code class="language-c">//error Message
+String errorMessage = &quot;&quot;;
+unsigned long int popuptimer=0;
+</code></pre>
+<p><code>errorMessage</code> is a String for displaying the message when an error incurred</p>
+<p><code>popuptimer</code> is a time variable for displaying a message on LCD, this is updated to the newest time, so the popup message will display for a duration of time after this variable is updated</p>
+<pre><code class="language-c">#include &lt;EEPROM.h&gt;
+int strByteLen = 200; //String Length limit in bytes
+int addrShift = 0; //to shift byte for wear leveling
+</code></pre>
+<p>EEPROM is one of the options to store and recall processing, all parameters are stored as a byte array.</p>
+<p><code>strByteLen</code> is currently defined as 200 bytes. Detailed structure of the stored array is in the comment section of the CP800.h tab.</p>
+<p><code>addrShift</code> is supposed to be a random 8 bits value that shifts the ROM address, in order to achieve wear leveling. The array will have a wrapping order from 256 back to 0. However, the wrapping is not yet programmed. Currently not use.</p>
+<pre><code class="language-c">#include &lt;SD.h&gt;
+#include &lt;SPI.h&gt;
+#include &lt;stdlib.h&gt;
+int SD_err =0; // 0: no err, 1: SD.begin error, 2: file load err, 3: step data load err
+int program_no = 0; // count the number of program stored in the SD card file
+int loadtype=0; // 1 is SD, and 0 is ROM, default from ROM
+int validROMprogram[6] = {1,1,1,1,1,1}; //0: invalid, 1:valid
+</code></pre>
+<p>Load all libraries required to use SD module on Arduino</p>
+<p><code>SD_err</code> is the value that returns from attempt to initiate the SD module</p>
+<p><code>program_no</code> is the number of processing program stored on the SD card; the program indicator is located at the beginning of each processing program. More details for the data structured store on SD card are described in “process_data” tab</p>
+<p><code>loadtype</code> determines how processing program is loaded, either from SD card or EEPROM</p>
+<p><code>validROMprogram</code> is an array of flags to indicate which programs stored in the EEMPROM have a valid data structure. If there is no legit program header found in each memory slot, the function will change this array of the corresponding index to 0, so loading on those program entries will be skipped.</p>
+<pre><code class="language-c">//digital Temperature Sensor
+#define tempPin 27 //DS18B20 signal bus
+OneWire oneWire(tempPin); //Temperature chip i/o
+DallasTemperature sensors(&amp;oneWire);
+//Temperature Control
+float tempCurrent = -10.0;
+float tempTarget = 22.0;
+</code></pre>
+<p>Currently temperature is not use in anyway. This is merely a template for future expansion for now.</p>
+<h1 id="define-pin-27-to-be-the-onewire-bus">define pin 27 to be the onewire bus</h1>
+<p>Instantiation of the onewire object to be the define above</p>
+<p>Instantiation of the dallas temperature sensor to be the one wire bus device</p>
+<p><code>tempCurrent</code> and <code>tempTarget</code> are the current and target temperature of the sensor. <code>tempCurrent</code> actually doesn’t need initialization.</p>
+<pre><code class="language-c">//instanstation of object
+Led Led(LED_woke);
+Buzzer buzz(buzz_pin,volume_pin);
+SixWay_valve addChem(add_s0,add_s1,add_s2,add_pump);
+SixWay_valve removeChem(remove_s0,remove_s1,remove_s2,remove_pump);
+agitationMotor agitationMotor(motor_on, motor_dir, motor_PWM);
+bathPump bathPump(soak_pump);
+//tankLevel tankLevel;
+//soakLevel soakLevel;
+digilevel drumHI(drum_high,LEVEL_SAMPLE_SIZE, INsense );
+digilevel drumempty(drum_empty,LEVEL_SAMPLE_SIZE, OUTsense);
+//analoglevel chemtanks_full();
+//analoglevel chemtanks_half();
+//analoglevel chemtanks_low();
+analoglevel soakLevel(tanks_full,LEVEL_SAMPLE_SIZE);
+AC_heater heater(heat_PWM);
+joystick joystick(KEYA,KEYB,KEYC,KEYD, KEYK, JOYX, JOYY);
+Dpad_analog panel_UI(Dpad_in_pin, Dpad_refH_pin, Dpad_refL_pin);
+UIcursor user_navi(&amp;UIcommend);
+UImap menu_navi(&amp;UIcommend);
+</code></pre>
+<p>Now we instantiate all objects needed to operate the machine with the variable we declared previously:</p>
+<ol>
+<li>LED</li>
+<li>Buzzer</li>
+<li>6ways valve for both inlet and outlet</li>
+<li>Motor</li>
+<li>Bathpump, currently no corresponding hardware</li>
+<li>Digital level sensor for inside the tank and along the outlet tube</li>
+<li>Analog level sensors are not used</li>
+<li>The heating element using AC power</li>
+<li>Joystick shield</li>
+<li>Dpad interface as the UI</li>
+<li>The cursor location on the screen is the user</li>
+<li>The location displayed on the screen is the menu</li>
+</ol>
+<h1 id="cp800h">CP800.h</h1>
+<p>This header tab is made to contains classes and global variable for those classes in the CP800 series</p>
+<pre><code class="language-c">#include &quot;pitches.h&quot;
+#define arrayLength(array) (sizeof((array))/sizeof((array)[0]))
+#include &lt;LiquidCrystal.h&gt;
+#include &lt;EEPROM.h&gt;
+</code></pre>
+<p>Libraries used in the classes : <code>pitches.h</code>, <code>EEPROM.h</code>, <code>LiquidCrystal.h</code></p>
+<p><code>pitches.h</code>: has the buzzer value to make different notes and function to generate pre-defined tune</p>
+<p>LiquidCrystal is the library for display on the LCD</p>
+<p>EEPROM is the library for accessing the EEPROM on Arduino</p>
+<p><code>arrayLength</code> is to calculate the size of an array using sizeof()</p>
+<pre><code class="language-c">bool zero_crossed=0;
+int maxcol=3; //maximum number of col to be display (shift colume by left and right)
+int rowstack[8][2];//a matrix that stored the row value for both the user cursor and the menu map
+int colstack[8][2]; //a matrix that stored the col value for both the user cursor and the menu map
+int actionstack; // the variable to restore which action the menu is selected
+String lcdStr[4] = {&quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;};
+int ispageEnd = 0; //flag indicaitng the end of the menu page
+int pagerow = 4; //default is four
+</code></pre>
+<p><code>zero_crossed</code> is the flag to indicate whether the AC input of the heating has crossed zero. This allows a fixed energy cycle for the PWM cycle within a certain time error</p>
+<p><code>maxcol</code> is the variable that allows users to shift left and right in the menu to see different information</p>
+<p><code>rowstack</code> is the data matrix that stored the row coordinate of both the user cursor and menu map</p>
+<p><code>colstack</code> is the data matrix that stored the column coordinate of both the user cursor and menu map</p>
+<p><code>actionstack</code> is the value for the action that the machine is taking, this is normally on the last page in the menu, where the user has to pick a function or run a program. The previously two stacks are for the location of the menu through each layer of the selection on the menu.</p>
+<p><code>lcdStr</code> is the array of 4 strings to be displayed on the LCD</p>
+<p><code>ispageEnd</code> is the flag for indicating the menu had reached an end page, a page where you have to select an action and no more option to be select after that</p>
+<p><code>pagerow</code> is the number of rows on the current menu page. Usually 4 rows, given the screen has 4 rows, but main menu and program selection has more, and allow scrolling down</p>
+<pre><code class="language-c">//this is the view in which the LCD is looking at
+struct camera{
+  int col;
+  int row;
+  int row_size;
+  int col_size;
+};
+</code></pre>
+<p>The <code>camera</code> struct contain the coordinate of the camera and the size in each dimension to be seen by the camera. Imagine it to be the view range of a person on the map.</p>
+<h1 id="class-uicursor">Class UIcursor</h1>
+<pre><code class="language-c">class UIcursor {
+  private:
+    byte* _inputsRef;
+    byte _inputs;
+    byte _Previnputs;
+    int _rowlimit=3;
+</code></pre>
+<p>Private variables include:</p>
+<p><code>_inputsRef</code> is the pointer to the input variable</p>
+<p><code>_inputs</code> is the variable that take the new inputs</p>
+<p><code>_previnputs</code> is the variable that stored the previous inputs</p>
+<p><code>_rowlimit</code> is restricted to row 3 (4th row) , because cursor cannot move out of the screen</p>
+<pre><code class="language-c">    void limit(int *row, int *col){
+      if (*row&gt;_rowlimit) *row=_rowlimit;
+      if (*row&lt;0) *row=0;
+      if (*col&lt;0) *col=0;
+    }
+</code></pre>
+<p>The private function <code>limit()</code> restricts the value of row and column between 0 to the <code>upperlimit</code>, so far only row has an upper limit for the cursor</p>
+<pre><code class="language-c">public:
+    int row=0;
+    int col=0;
+    int layer=0;
+</code></pre>
+<p><code>row</code>, <code>col</code>, <code>layer</code> fully describe the location of the cursor on the map</p>
+<pre><code class="language-c">    //pass the input pointer to the private variable
+    UIcursor (byte* inputs){
+      _inputsRef = inputs;
+    }
+</code></pre>
+<p>Instantiate the class by passing a pointer of a byte</p>
+<pre><code class="language-c">    void begin(){
+      //initiate inputs
+      _inputs = *_inputsRef; //when begin, load the value of the input pointer to _inputs
+      _Previnputs = _inputs; // initailise the previous as current inputs
+</code></pre>
+<p>Initialize the class by taking the input from the pointer and make previous input the same</p>
+<pre><code class="language-c">// can overwrite the current location of the cursor to any positon on the map
+    void wrappoint (int wraprow, int wrapcol, int wraplayer){
+      row=wraprow;
+      col=wrapcol;
+      layer=wraplayer;
+    }
+</code></pre>
+<p>Public function to edit the current location of the cursor to any value</p>
+<pre><code class="language-c">// update cursor from the inputs given the number of row to be displayed and wehter it is a end page
+    void Update(int isEnd, int displayrow){
+      _inputs = *_inputsRef;
+      _rowlimit = displayrow-1;
+      // shift between menu layr with A and B
+      // ULRDAB
+      bool A = (_Previnputs&gt;&gt;A_shift &amp; 1) &amp; ~(_inputs&gt;&gt;A_shift &amp; 1);
+      bool B = (_Previnputs&gt;&gt;B_shift &amp; 1) &amp; ~(_inputs&gt;&gt;B_shift &amp; 1);
+      if (A){
+        rowstack[layer][2] =row;
+        colstack[layer][2] =col;
+        //stop incrementing if page is an end page
+        if (isEnd!=1){
+          rowstack[layer][2] =row;
+          layer +=1;
+          // new coordinate for new layer
+        }else{
+          actionstack = row; // which row is pressed on the action page/end page
+        }
+        // return row and col anyway after pressing A, too hard to see respawn without changes, updated 202011130
+        row = 0;
+        col = 0;
+        if(layer&gt;3)layer=3;
+      }else if (B){
+        //use 0 to destroy the layer for returning operation
+        rowstack[layer][2] = 0;
+        colstack[layer][2] = 0;
+        layer -=1;
+        if(layer&lt;0)layer=0;
+        row = rowstack[layer][2];
+        col = colstack[layer][2];
+        //clear after unloading into the cursor positoin
+        rowstack[layer][2] = 0;
+        colstack[layer][2] = 0;
+      }else{
+</code></pre>
+<p>The update function is the core function of the class. It updates the position of the cursor by reading and interpreting the buttons inputs, when the update is called.</p>
+<p>The button shift defined in header will now be used to isolate the A and B button, these buttons confirm or cancel an action.</p>
+<p>When press A:</p>
+<ol>
+<li>Stored the current row and column position to the stack</li>
+<li>If this is the end page, row value is the action option, if not, we increment the layer</li>
+<li>Then reset row and column position to 0 as we are either doing a new action,</li>
+<li>Since no page is beyond layer 3, restrict layer increment when reached end, this could be redundant if mapping and tracking is done better
+   When press B:</li>
+<li>Reset current position to zero in stack</li>
+<li>Decrement layer</li>
+<li>Load previous layer position</li>
+<li>Clear the previous location from stack</li>
+</ol>
+<pre><code class="language-c"> }else{
+        /*
+         * row increment when the down button signal transit from 1 to 0
+         * row decrement when the up button signal transite from 1 to 0
+         *
+         * commend switch to col if the menu allow colum
+         *
+         * non blocking operation for all direction (could be using in game mode)
+         * ULRDAB
+         */
+        row += (_Previnputs&gt;&gt;Down_shift &amp; 1) &amp; ~(_inputs&gt;&gt;Down_shift &amp; 1) &amp; _inputs&amp; 1;
+        row -= (_Previnputs&gt;&gt;Up_shift &amp; 1) &amp; ~(_inputs&gt;&gt;Up_shift &amp; 1) &amp; _inputs&amp; 1;
+        // we may not need col position for the cursor
+        col += (_Previnputs&gt;&gt;Right_shift &amp; 1) &amp; ~(_inputs&gt;&gt;Right_shift &amp; 1) &amp; (_inputs&gt;&gt;1 &amp; 1);
+        col -= (_Previnputs&gt;&gt;Left_shift &amp; 1) &amp; ~(_inputs&gt;&gt;Left_shift &amp; 1) &amp; (_inputs&gt;&gt;1 &amp; 1);
+        limit(&amp;row,&amp;col);
+      }
+      // restore previous inputs
+      _Previnputs = _inputs;
+    }
+};
+</code></pre>
+<p>When press other buttons</p>
+<ol>
+<li>Increment or decrement row value if press up and down while row shift bit is enabled (<code>_inputs&amp;1</code>)</li>
+<li>Increment or decrement column value if press left and right while row shift bit is enabled (<code>_inputs&gt;&gt;1&amp;1</code>)</li>
+<li>Check and limit row and column according to the boundary of the menu page
+   Always, update input to previous input at the end</li>
+</ol>
+<h1 id="class-uimap">Class UImap</h1>
+<p>This class is very similar to <code>UIcursor</code>, in fact, it could be position to generalise both <code>UImap</code> and <code>UIcursor</code> class into one class.</p>
+<pre><code class="language-c">class UImap{
+  private:
+    //map has a camera datatype to contain the dispaly size and location of the menu
+    camera _mapCam;
+
+    byte* _inputsRef;
+    byte _inputs;
+    byte _Previnputs;
+    int _rowlimit=3; //default typical 4 row, 0-3
+
+    void limit(int *row, int *col){
+      if (*row&gt;_rowlimit) *row=_rowlimit;
+      if (*row&lt;0) *row=0;
+      if (*col&lt;0) *col=0;
+</code></pre>
+<p>All except the inclusion of camera struct is the same as <code>UIcursor</code>. Camera structs allow <code>UImap</code> not only the position but the range of location that is visible</p>
+<pre><code class="language-c">    void begin(){
+      _mapCam.row=0; //start at the top
+      _mapCam.col=0; //start at the left
+      _mapCam.row_size = 4; //default dispalying 4 row of character
+      _mapCam.col_size = 19;//default dispalying 19 character
+      //initiate inputs
+      _inputs = *_inputsRef;
+      _Previnputs = _inputs;
+    }
+</code></pre>
+<p>Initialize class with camera values, and camera sizes are fixed</p>
+<pre><code class="language-c">void wrappoint (int wraprow, int wrapcol, int wraplayer)
+</code></pre>
+<p>Exact same function as <code>UIcursor</code></p>
+<pre><code class="language-c">    void Update(int isEnd, int displayrow){
+      _inputs = *_inputsRef;
+      _rowlimit = displayrow-1;
+      // shift between menu layr with A and B
+      bool A = (_Previnputs&gt;&gt;A_shift &amp; 1) &amp; ~(_inputs&gt;&gt;A_shift &amp; 1);
+      bool B = (_Previnputs&gt;&gt;B_shift &amp; 1) &amp; ~(_inputs&gt;&gt;B_shift &amp; 1);
+      if (A){
+        colstack[layer][1] =col;
+        if (isEnd!=1){
+          rowstack[layer][1] =row;
+          layer +=1;
+          // new coordinate for new layer
+          row = 0;
+          col = 0;
+        }else{
+          actionstack = row;
+        }
+        if(layer&gt;3)layer=3;
+</code></pre>
+<p>Update mirror the <code>UIcursor</code></p>
+<pre><code class="language-c">      }else{
+      /*
+        row += (_Previnputs&gt;&gt;Down_shift &amp; 1) &amp; ~(_inputs&gt;&gt;Down_shift &amp; 1) &amp; _inputs&amp; 1;
+        row -= (_Previnputs&gt;&gt;Up_shift &amp; 1) &amp; ~(_inputs&gt;&gt;Up_shift &amp; 1) &amp; _inputs&amp; 1;
+        // we may not need col position for the cursor
+        col += (_Previnputs&gt;&gt;Right_shift &amp; 1) &amp; ~(_inputs&gt;&gt;Right_shift &amp; 1) &amp; (_inputs&gt;&gt;1 &amp; 1);
+        col -= (_Previnputs&gt;&gt;Left_shift &amp; 1) &amp; ~(_inputs&gt;&gt;Left_shift &amp; 1) &amp; (_inputs&gt;&gt;1 &amp; 1);
+        limit(&amp;row,&amp;col);
+      }
+      _mapCam.row = row;
+      _mapCam.col = col;
+      // restore previous inputs
+      _Previnputs = _inputs;
+    }
+};
+</code></pre>
+<p>The camera will also be updated.</p>
+<h1 id="class-buzzer">Class Buzzer</h1>
+<p>This class required the <code>pitches.h</code> header</p>
+<pre><code class="language-c">  private:
+    uint8_t _in_pin,_rh_pin,_rl_pin;//inputs, reference high, reference low
+    int _init_volt,_init_rh,_init_rl; //initial reading of each pin
+    int _new_volt,_new_rh,_new_rl,_dVolt; // new input of each pin, and a change of voltage value
+    int _old_volt=0; //old voltage value
+    int _threshold = 15;//default threshold to ignore noise is 9 over 1024 volt
+    float _shift_ratio=0; //the rati of voltage shift over the refrence voltage range as a linear scale from initial volts to new volts
+    int _ref_range;// range of reference voltage , reference high - reference low
+    bool _button_reg_set=0; //default assume release
+    bool _edgetrigger=0; //edge trigger flag
+    long _edgetiming=0; //edge trigger timing
+</code></pre>
+<p><code>_in_pin</code>, <code>_rh_pin</code>, <code>_rl_pin</code>, are the Dpad input pin, high voltage reference pin, low voltage reference pin respectively</p>
+<p><code>_init_volt</code>, <code>_init_rh</code>, <code>_init_rl</code>, are the initialise reading, in <code>Begin()</code> from the input pin, high voltage reference pin, and low voltage reference pin respectively</p>
+<p><code>_new_volt</code>, <code>_new_rh</code>, <code>_new_rl</code> are the new reading from the input pin, high voltage reference pin, and low voltage reference pin respectively</p>
+<p><code>_dVolt</code> is a variable to calcualte the difference between two votlage reading</p>
+<p><code>_old_volt</code>, is the <code>_new_volt</code> in the previous update</p>
+<p><code>_threshold</code> define the deadband in which the program ignore the fluctuation of the voltage reading in the input pin</p>
+<p><code>_shift_ratio</code> is a ratio to represent relative voltage change, the full equation wil be defined in <code>Update()</code></p>
+<p><code>_ref_range</code> is the variable used to store the value between the high and low reference voltage</p>
+<p><code>_button_reg_set</code> is a flag is indicate whether a button is pressed, 0 is pressed, given input are pulled up</p>
+<p><code>_edgetrigger</code> is the flag for an edge has been triggered</p>
+<p><code>_edgetiming</code> is the timing when the edge triggered.</p>
+<blockquote>
+<p>:information_source: NOTE: might be neater to compress these pin reading into a data array, and the update operate could iterate through the variable instead of calling each variable individually.</p>
+</blockquote>
+<pre><code class="language-c">class Buzzer {
+  private:
+    uint8_t _buzz_pin; //which pin is the buzzer
+    uint8_t _vol_pin; //the voltage of the buzzer (1 of two preset value)
+    uint8_t _welcomeMelody[2] = {NOTE_B5,NOTE_A5}; // welcome tones
+    uint8_t _welcomeMelodyDuration[2] = {250,250}; //duration for welcome tones
+</code></pre>
+<p>Buzzer has 4 private variables;
+<code>_buzz_pin</code> contain the pin number for the buzzer
+<code>_vol_pin</code>, controls the MOSFET that boost the current to the buzzer
+<code>_welcomeMelody</code> is a two notes array that make noise when bootup,
+<code>_welcomeMelodyDuration</code> is the timer period for each note in the welcome tune</p>
+<pre><code class="language-c">  public:
+  //Constructor
+    //constructor without volume pin
+    Buzzer(uint8_t buzz_pin){
+      _buzz_pin = buzz_pin;
+    }
+    //constructor with both pin and volume
+    Buzzer(uint8_t buzz_pin,uint8_t vol_pin){
+      _buzz_pin = buzz_pin;
+      _vol_pin = vol_pin;
+    }
+</code></pre>
+<p>Two constructors</p>
+<ol>
+<li>Without volume control</li>
+<li>With volume control</li>
+</ol>
+<pre><code class="language-c">// play any single note
+    void play_Note(int Note, int duration){
+      tone(_buzz_pin,Note,duration);
+    }
+    // play an array of notes
+    int play_array(uint8_t Note_ary[], int note_len,uint8_t duration_ary[], int dura_len){
+      //check either of them are empty
+      if(note_len==0||dura_len==0){
+        return 2; //type 2 error: empty inputs
+      }
+      // check if the duration matches the Note in size
+      if (note_len != dura_len){
+        return 1; //type 1: error array doesn't matches
+      }
+      for (int playnote=0; playnote&lt;note_len; playnote++){
+        //cychle thru each note in array with cooresponding duration
+        tone(_buzz_pin,Note_ary[playnote],duration_ary[playnote]);
+      }
+      return 0;
+    }
+</code></pre>
+<p>Play note function only play one note with one duration</p>
+<p>Play array function cycle thru all the note in array and match the duration</p>
+<pre><code class="language-c">// rountine to play welcome tune
+    void welcome(){
+      play_array(_welcomeMelody,2,_welcomeMelodyDuration,2);
+    }
+    // routine to play nothing
+    void no_note(){
+      noTone(_buzz_pin);
+    }
+</code></pre>
+<p>The <code>welcome()</code> subroutine plays the welcome tune using <code>play_array()</code></p>
+<p>There is a subroutine that play nothing</p>
+<pre><code class="language-c">    // inistilising the buzzer pins
+    void begin(){
+      pinMode(_buzz_pin, OUTPUT);
+      pinMode(_vol_pin, OUTPUT);
+    }
+</code></pre>
+<p>Initialize class by setup buzz and volume pin as output in Arduino</p>
+<pre><code class="language-c">    //write high
+    void vol_HI(){
+      digitalWrite(_vol_pin, HIGH);
+    }
+    //write low
+    void vol_LO(){
+      digitalWrite(_vol_pin, LOW);
+    }
+};
+</code></pre>
+<p><code>vol_hi</code> function connects the buzzer ground with a low resistor value using MOSFET, low resistor more current thus louder</p>
+<p><code>vol_lo</code> function cut off the buzzer ground with a low resistor value using MOSFET</p>
+<h1 id="class-dpad_analog">Class Dpad_analog</h1>
+<pre><code class="language-c">class Dpad_analog{
+  //digital Dpad would be separate to avoid excessive memory allocation
+  public:
+    byte status_reg = 0b11111100; //button inputs are pulled high
+    //status reg that show which button is being pressed
+    //NOTE: the full voltage of the DAC is about 82.6% of the uC HIGH output
+
+    //constructor
+    // 10 bits analog input version , CP-800 use this
+    Dpad_analog(uint8_t input_pin, uint8_t ref_high_pin, uint8_t ref_low_pin){
+      _in_pin = input_pin;
+      _rh_pin = ref_high_pin;
+      _rl_pin = ref_low_pin;
+    }
+</code></pre>
+<p>Dpad <code>status_reg</code> records the status of the Dpad which are the 6 buttons inputs plus row and column shift enable bit at the end</p>
+<p>Constructor with inputs to <code>_in_pins</code>, two analog pin for the high logics voltage and low logics voltage</p>
+<pre><code class="language-c">    void begin(){
+      pinMode(_in_pin, INPUT);
+      pinMode(_rh_pin, INPUT_PULLUP);
+      pinMode(_rl_pin, INPUT);
+      _init_volt = analogRead(_in_pin);
+      _init_rh = analogRead(_rh_pin);
+      _init_rl = analogRead(_rl_pin);
+     // _old_volt = _init_volt; //record init voltage input as previous voltage input
+    }
+</code></pre>
+<p>Initialisation routine define</p>
+<ol>
+<li><code>_in_pin</code> as input, output from DAC IC</li>
+<li><code>_rh_pin</code> as input pulled up, for high voltage</li>
+<li><code>_rl_pin</code> as input, externally pulled down, for low voltage</li>
+<li>Read all inputs pin to initialize values</li>
+</ol>
+<pre><code class="language-c">    // check if there is a update on Dpad inputs
+    int checkupdate(){
+       return(_old_volt&gt;_new_volt+_threshold || _old_volt&lt;_new_volt-_threshold);
+    }
+    int Ispressed(){
+      return 1-_button_reg_set; //return 0 if pressed
+    }
+</code></pre>
+<p>The <code>checkupdate()</code> routine return 1 when new value is <code>_threshold</code> difference from the old values</p>
+<p><code>Ispressed()</code> returns 0 when a button is pressed</p>
+<h1 id="future-development">Future development</h1>
+<ul>
+<li>Optimization of RAM usage</li>
+<li>Remove global variables that are not used</li>
+<li>More modularized code and use local variable.</li>
+<li>Better way to store tune and menu option (mainly const chr/int)</li>
+<li>More buttons and better structure button classes</li>
+<li>Currently the respond is are only 6 buttons, directions + AB, this should be expanded to respond to a more complex controller and allow more action from the user</li>
+<li>Allow a more efficient way to quick travel to another location or return to previous location, A systematic set of coordinates in the mapping might help.</li>
+<li>The structure for the mapping on the menu and cursor should remain separated, imagine the cursor is the user’s character, and it is navigating the menu as if it is an RPG. Both the POV of the environment and the chr have to react to the user’s inputs.</li>
+<li>Better ROM read/write addressing. Currently the ROM programs are referring to a set of fixed addresses. This could result in an imbalance number of read/write for some memory unit, and thus worn out those units quicker than others.</li>
+<li>New writing methods should consider the health of each ROM unit and maximize their life by using dynamic indexing, to avoid overwriting existing ROM units.</li>
+<li>The new method should also repeat old information in a new region. It would be ideal to reuse a step from another processing cycle than write a new step, since many step between different processing can be shared, such as rinse with water.</li>
+<li>maybe using wear leveling technique to use each ROM cell evenly. However, this might nullify the ROM.update() function where data is only update when there is a change to it</li>
+<li>Better still, to use a data compressing method that maximised reusing existing variables and trimmed data to be stored.</li>
+<li>Better code organization</li>
+<li>Tabs can be combined/separated according to their function/hardware/other arrangement</li>
+<li>There could be a classification of different header for different purpose, to further modalized the codes, this might allow an entire feature to be reuse in another project.</li>
+<li>UI</li>
+<li>Generise <code>UIcursor</code> and <code>UImap</code> with a navigation class that has position value</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../circuit/" class="btn btn-neutral float-right" title="Description">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../circuit/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

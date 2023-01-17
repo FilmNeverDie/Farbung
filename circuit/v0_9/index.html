@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://FilmNeverDie.github.io/Farbung/circuit/v0_9/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>v0.9 - FilmNeverDie — CP800 Wiki</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "v0.9";
+        var mkdocs_page_input_path = "circuit/v0_9.md";
+        var mkdocs_page_url = "/Farbung/circuit/v0_9/";
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> FilmNeverDie — CP800 Wiki
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../software/">Software</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Circuit</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">Description</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">v0.9</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#power-circuit">Power circuit</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pumps-control">Pumps control</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#motor-control">Motor Control</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solenoid-valves-control">Solenoid valves control</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#user-interface">User interface</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#heating-element">Heating element</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sensors">Sensors</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#buzzer">Buzzer</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#communication-ports">Communication Ports</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#microcontroller-pinout">Microcontroller pinout</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../v0_92/">v0.92</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Advanced</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../advanced/arduino_process_gen/">Writing programs with Arduino script</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">FilmNeverDie — CP800 Wiki</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Circuit &raquo;</li>
+      <li>v0.9</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="v09">V0.9</h1>
+<p>The original working prototype for CP800</p>
+<p>The function of the board is broken down into the following sections:</p>
+<p>1)  The power transfer to each of the components below</p>
+<p>2)  The pumps</p>
+<p>3)  The motor</p>
+<p>4)  The fluid sensors feedback</p>
+<p>5)  The solenoid valves for flow control</p>
+<p>6)  The user interface</p>
+<p>7)  The heating element</p>
+<h2 id="power-circuit">Power circuit</h2>
+<p><img alt="" src="../images/a5af23a017931d6dd6c97e1efb1e29145736b515.png" /></p>
+<p>Both 12V and 5V comes from the external switch converter and are reverse
+polarity protected with low on resistance p-channel MOSFET and Zener
+diode.</p>
+<p>The Arduino is powered via the 5V pin bypassing the LDO that required a
+higher voltage to power. And all 12V and 5V components will be supplied
+by these two voltage sources.</p>
+<p><img alt="" src="../images/2db910335ebdd3a4253d7a811334af805da3ee41.png" /></p>
+<p>There are four power connectors, one is the input from the 12V PSU, one
+is the 12V output after the reverse polarity protection, one is 5V
+voltage input from the buck converter, and the last one is an extra
+header for a 5V reference.</p>
+<h2 id="pumps-control">Pumps control</h2>
+<p><img alt="" src="../images/d8ddaef542e4a0e9c2f4ac4a2a79790196ac28cb.png" /></p>
+<p>There are three output ports for pumps. They are 2pin output.</p>
+<p>Each pump is driven by a power MOSFET to switch them on and off with a
+low side BJT transistor as the gate driver.</p>
+<p>A high output in the microcontroller will allow gate to discharge thru
+the BJT quickly, and achieve a faster turn off of the pumps. Meanwhile,
+a low output on the microcontroller will turn the BJT off, and the
+MOSFET gate is charged thru the low resistance pull up resistor, to
+achieve a regulated turn on time.</p>
+<p>The pull up resistor in the microcontroller signal pin is implemented in
+the case where these pins are not programmed. The pull up resistors will
+ensure the pump is off when these pins are not programmed.</p>
+<p>Fuses are installed to prevent over current, and a flyback Schottky
+diode is used to limit voltage surge by the induction load from the
+pumps.</p>
+<h2 id="motor-control">Motor Control</h2>
+<p><img alt="" src="../images/72950af9ba3f602d26cdd749b54be6463c7e8027.png" /></p>
+<p>The motor control is very similar to the pump control as they are both
+inductions loading presumably.</p>
+<p>The motor we are using has 5 pins control: PWR, DIR, PWN, FB, GND. We
+don't use the current feedback wire, so it is left out of the port
+output intentionally.</p>
+<p>The motor is then connected to the 4 pins JST XH output on the board.</p>
+<p>In order to turn on the motor, we need the PWE pin to be 12V, and the
+GND pin to be 0V. There is a fuse of the appropriate current to limit
+over current, and there is a flyback Schottky diode to limit voltage
+surge.</p>
+<p>Both DIR and GND pins are controlled by power MOSFETs to switch between
+12V and 0V. A pulled up resistor of 12V is in place for the DIR pin, so
+there is a default DIR of rotation for the motor, if the pin is left
+hanging.</p>
+<p>The low side BJT allows a quick discharge of gate, and the low
+resistance pull up allows a fixed time fast charging up to the gate.</p>
+<p>The pulled up in the microcontroller pins are to make sure the DIR and
+0V pin are forced to 12V and keep the motor off, if these pins are not
+programmed by the microcontroller.</p>
+<h2 id="solenoid-valves-control">Solenoid valves control</h2>
+<p><img alt="" src="../images/2ce82c4fa48dbca0a85abdf8af10c18cd95f5e94.png" />Both add and remove valves are controlled in the same
+way. Since solenoid is a highly inductive load, we have to apply a
+voltage of 12V across each pair of contact on the solenoid block.
+Similar to motor and pumps, a fuse to protect from over current and
+flyback Schottky diode for voltage surge.</p>
+<p>Each solenoid is switched on and off by a MOSFET with a low side BJT
+driver for fast drain in gate and a pulled-up resistor in case of
+unprogrammed microcontroller pins to the demultiplexer, CD4051.</p>
+<h2 id="user-interface">User interface</h2>
+<p><img alt="" src="../images/d49cd66c63a79392b44038c21ba4347f020d3d34.png" /></p>
+<p>There are two connectors between the motherboard and the Dpad board.
+These control the user interface. The 10ways IDC connector is the
+connection with each button and LED on the Dpad. The 10ways JST XH
+header is the signal going to the LCD screen.</p>
+<p>The screen is turned on and off by MOSFET, the program is currently
+locked to stay on. Future programming is required to control the
+backlight.</p>
+<p><img alt="" src="../images/e9b49f3e5be68589fc388fdd86d563ab1ce66e64.png" /></p>
+<p>The signal from the Dpad will be processed by a DAC with a R-2R
+structure, to convert the 6 inputs from the Dpad to a binary coded 8bit
+voltage. Note that only UIcontrol analog signal is used, the second
+output is left connected. Now.</p>
+<h2 id="heating-element">Heating element</h2>
+<p><img alt="" src="../images/b27256ddae968f32af6be2912b359ea0fbbc5e4a.png" /></p>
+<p>The heating element chosen is one that is powered by AC 240V input, at
+the connector, HE1.</p>
+<p>KBP206G is the rectifier to convert AD into DC voltage.</p>
+<p>The 4N35SM photocoupler will convert the rectified wave and generate an
+on and off 5V signal to the microcontroller to locate the zero-crossing
+point of the input wave. This will allow the microcontroller to align
+the output from this zero-crossing moment if necessary.</p>
+<p>MOC3020 is the photocoupler, between DC to AC using a triac. This
+component allows the microcontroller to sink the current at the cathode
+(the negative, pin 2) of the MOC3020 diode. Allowing the microcontroller
+to control the pulse powering the heating element by driving the BT1365
+triac.</p>
+<p>R6, R9 and C2, are there to protect the MOC3020 from load, and R10 and
+C3 form the snubber to protect the triac.</p>
+<p><img alt="" src="../images/1a5972b24ee6be96f8deea1c6574e29449a1b8ff.png" /></p>
+<p>Additional cutout on PCB to increase the effective isolation between the
+240V on each contact of the rectifier.</p>
+<p><img alt="" src="../images/e3d0a6ba782a003dc8ef565e5ee8a7135d475124.png" /></p>
+<p>The AC circuit is located at a different part of the PCB, and the pinout
+for controlling the heating element is done by a 4ways connector as
+shown above. A jumper cable will be required to connect this connector,
+MUC_HEAT_OUT1, with the one input 4ways connector, MCU_heating_IN1,
+connection the MOC3020 and 4N35 IC.</p>
+<h2 id="sensors">Sensors</h2>
+<p><img alt="" src="../images/b95cabdec566c15e84314ab4b1310db18db4a5b6.png" /></p>
+<p>There are three main sensors: temperature, tank high level, and flow out
+sensor</p>
+<p>Temperature sensor is currently unuse, it is supposed to serve as the
+feedback to control the heating element. It is using a one-wire bus to
+transmit its digital data. The sensor used here is DS18B20.</p>
+<p>The tank high level sensor is a 4 pins socket connecting to a
+capacitance sensor mounted to the tank and will trigger a on signal when
+the water level is raised.</p>
+<p>The flow out sensor is a 4 pins socket connecting to two capacitance
+sensors clipped to the outlet tubbing from the tank to the solenoid
+valve, and will trigger a signal when they sense the tube has fluid
+inside.</p>
+<h2 id="buzzer">Buzzer</h2>
+<p><img alt="" src="../images/2c57ee5b3f6431347a86565101374c0a7933ff8a.png" /></p>
+<p>A buzzer is integrated to the board, this allows the program to give out
+audio clues to the user/operator when things happen. See software
+documentation to see the list of audio clues.</p>
+<h2 id="communication-ports">Communication Ports</h2>
+<p><img alt="" src="../images/94ef439de058dcca5a704ba09dd5e3e3687ee2a2.png" /></p>
+<p>There are two types of communication port accessible from the boards via
+three ports:</p>
+<p>There are two I2C ports, 4 ways, with one of the port has an extra set
+of pulled up resistor for a new additional device</p>
+<p>There is a 16way IDC SPI communication port. This is currently used for
+the SD card module. The hardware is suitable for any SPI device. The
+parallel pin socket allow another device to be piggy-back to the same
+port.</p>
+<h2 id="microcontroller-pinout">Microcontroller pinout</h2>
+<p><img alt="" src="../images/13f5299cd7b8ad20d8dafd82c7dd70d71715c2b7.png" /></p>
+<p>A pinout diagram of the microcontroller to all the other components on
+the board. Some basic components such as transistor and resistor are
+added depending on the signal the pin is interfacing with. This would
+change depending on the programs being uploaded to the microcontroller.</p>
+<p><img alt="" src="../images/ff2a45a162c058091e93d60abf053a5c64acbc8d.png" /></p>
+<p>All the extra pins are tentatively grouped to an IDC header for future
+development and expansion.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../" class="btn btn-neutral float-left" title="Description"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../v0_92/" class="btn btn-neutral float-right" title="v0.92">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../v0_92/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

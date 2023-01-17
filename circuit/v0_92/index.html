@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://FilmNeverDie.github.io/Farbung/circuit/v0_92/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>v0.92 - FilmNeverDie — CP800 Wiki</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "v0.92";
+        var mkdocs_page_input_path = "circuit/v0_92.md";
+        var mkdocs_page_url = "/Farbung/circuit/v0_92/";
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> FilmNeverDie — CP800 Wiki
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../software/">Software</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Circuit</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">Description</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../v0_9/">v0.9</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">v0.92</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#power-circuit">Power circuit</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pumps-control">Pumps control</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#motor-control">Motor control</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#solenoid-valves-control">Solenoid valves control</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#user-interface">User interface</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#heating-element">Heating element</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#arduino-usb-host-shield-dock">Arduino USB Host shield dock</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sensors">Sensors</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#buzzer">Buzzer</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#communication-ports">Communication Ports</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#microcontroller-pinout">Microcontroller pinout</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Advanced</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../advanced/arduino_process_gen/">Writing programs with Arduino script</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">FilmNeverDie — CP800 Wiki</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Circuit &raquo;</li>
+      <li>v0.92</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="v092-in-machine-after">V0.92 (in machine after )</h1>
+<p>Changes:</p>
+<p>1)  Removed pull up resistor for direction pin of the motor</p>
+<p>2)  Number of extra pins reduced</p>
+<p>3)  One additional IDC socket for joystick shield</p>
+<p>4)  Pin out header socket for USB host shield, required one additional
+    stacking pins</p>
+<p>5)  Removed the extra ICSP pins, it is now used by the USB host shield</p>
+<p>6)  Use one 5V LDO (AMS1117) onboard required low voltage input of at
+    least 6.5V</p>
+<p>7)  Arduino mage gets power from Vin around 6.5V and signals powered
+    from onboard 5V LDO (AMS1117)</p>
+<p>8)  One PISO shift registers for Dpad buttons input are available
+    instead of the R-2R ladder analog output to buttons</p>
+<p>9)  Red onboard LED for reverse voltage input for both 12V and low
+    voltage terminals</p>
+<p>10) Green onboard LED for forward voltage input for both 12V and low
+    voltage terminals</p>
+<p>11) Mounting holes increase from M3 to M4, holes position remains the
+    same</p>
+<p>12) Size of board increase in the X-axis</p>
+<h2 id="power-circuit">Power circuit</h2>
+<p><img alt="" src="../images/1cfef376658b2e2c79412c83cb0f5f67111f9ffe.png" /></p>
+<p>Both 12V and low voltage (6.5V) from the external switch converter are
+reverse polarity protected with low on resistance p-channel MOSFET and
+Zener diode.</p>
+<p>When reverse polarity occurred, the pMOSFET will shut down the main
+circuit from the high voltage side, but the red SMD LED will turn on as
+an indication for the user that they had reversed the input leads</p>
+<p>When the correct polarity is inserted, the pMOSFET will shunt the high
+voltage side leads, and activate the green SMD LED.</p>
+<p><img alt="" src="../images/23390f8a25b80f8db8a3d0257296a518a6a4b840.png" /></p>
+<p>One additional 5V regulator is implemented to share the loads required
+by the 5V sources. This is the same chip as the 5V LDO on the Arduino
+mega pro mini</p>
+<p>In the schematics diagram, 5V is the one powered by the Arduino, while
+all 5V_EX connection is powered by this additional chip.</p>
+<p><img alt="" src="../images/66668ddba5ffd456d4ca1c61d8476b03eaa3ac8b.png" /></p>
+<p>There are four power connectors, one is the input from the 12V PSU, one
+is the 12V output after the reverse polarity protection, one is low
+voltage input from the buck converter, and the last one is an extra
+header for a 5V reference.</p>
+<h2 id="pumps-control">Pumps control</h2>
+<p><img alt="" src="../images/d8ddaef542e4a0e9c2f4ac4a2a79790196ac28cb.png" />Remain unchanged</p>
+<h2 id="motor-control">Motor control</h2>
+<p><img alt="" src="../images/b469d0c76c491a7fdd7777d0b227067a64f627e4.png" /></p>
+<p>The only changes made are the direction pin of the motor. Now the pin is
+left floating/disconnected if it is not shorted to GND for backward
+direction</p>
+<p>The change is made because the motor we used is not a raw motor, it is a
+DIR and PWM controlled motor. Therefore, there is a controller board
+inside the motor assembly. Depending on the quality of the motor, if
+there is a current path inside the motor assembly, the additional pull
+up resistor outside the assembly will affect the voltage level on that
+pin.</p>
+<p>Also, according to the product datasheet, the DIR pin could be left
+disconnected for forward direction, thus proving there is an internal
+pull up inside the motor assembly.</p>
+<p>The rest is the same as the previous version.</p>
+<h2 id="solenoid-valves-control">Solenoid valves control</h2>
+<p><img alt="" src="../images/2ce82c4fa48dbca0a85abdf8af10c18cd95f5e94.png" />Same as previously</p>
+<h2 id="user-interface">User interface</h2>
+<p><img alt="" src="../images/d49cd66c63a79392b44038c21ba4347f020d3d34.png" /></p>
+<p><img alt="" src="../images/e9b49f3e5be68589fc388fdd86d563ab1ce66e64.png" /></p>
+<p>The Dpad function works as previously</p>
+<p>In v0.92, there are two additional components added for the user
+interface</p>
+<p><img alt="" src="../images/26a84d7f379f50d7e6ea69602e7f14db5d51896f.png" /></p>
+<p>Firstly, the 12ways IDC connector allows the microcontroller to
+interface with Arduino joystick shield. Since we don't plan to use key E
+and F, they are left disconnected with the microcontroller here. This is
+a optional addon, the Dpad functions as usual without the connection
+with joystick shield, and the joystick shield will work simultaneously
+with the Dpad.</p>
+<p>The addition of a parallel in and series out shift register allows pure
+digital signal to be transmitted to the microcontroller for all the Dpad
+buttons. This required additional programming that allowed the signal to
+be read via the UI_Serin input for all 8 buttons.</p>
+<h2 id="heating-element">Heating element</h2>
+<p><img alt="" src="../images/b27256ddae968f32af6be2912b359ea0fbbc5e4a.png" /></p>
+<p>Same as previously</p>
+<p>But, DO note that MOC3020, and 4Nm5 might need to be changed to other
+equivalent components due to availability.</p>
+<h2 id="arduino-usb-host-shield-dock">Arduino USB Host shield dock</h2>
+<p><img alt="" src="../images/52ff6fb270440204ceb9e6a45426ed9bff553b30.png" /></p>
+<p>This layout allows the Arduino USB Host shield to be connected simply by
+docking it over these docking headers. Most of the bypassing digital and
+analog pins from the shield are unuse. They are included for structural
+reasons.</p>
+<p>The USB host shield converts the USB signal into SPI interface to the
+microcontroller.</p>
+<p>This has been tested and used with a Bluetooth USB dongle, and
+communicates with a PS5 controller to act as the user interface to
+navigate the menu.</p>
+<h2 id="sensors">Sensors</h2>
+<p><img alt="" src="../images/b95cabdec566c15e84314ab4b1310db18db4a5b6.png" /></p>
+<p>Same as previously</p>
+<h2 id="buzzer">Buzzer</h2>
+<p><img alt="" src="../images/2c57ee5b3f6431347a86565101374c0a7933ff8a.png" /></p>
+<p>Same as previously</p>
+<h2 id="communication-ports">Communication Ports</h2>
+<p><img alt="" src="../images/94ef439de058dcca5a704ba09dd5e3e3687ee2a2.png" /></p>
+<p>Same as previously</p>
+<h2 id="microcontroller-pinout">Microcontroller pinout</h2>
+<p><img alt="" src="../images/eeda7f6ec0a601f22f32e665228434b31a90ee91.png" />The left side of the picture is the header arrangement
+on the board for docking the arduino board. The right is the labeled
+pinout of the Arduino.</p>
+<p>A additional fuse is added to the Vin to the Arduino board, since in
+v0.9, power is feed via the 5Vport of the Arduino bypassing the 5V LDO
+onboard.</p>
+<p><img alt="" src="../images/ae767a990ef868abade59022c3eb0b8e6e08153d.png" /></p>
+<p>Extra pin unused pin is group to an extra IDC header for future
+expansion. This has been significantly reduced due to the module
+expansion and component compatibility from v0.9 to v0.92.</p>
+<p>The firmware is made backward compatible, so the program being uploaded
+to this board that processes all the added component to this iteration
+of PCB can also be uploaded to v0.9 without causing a bug. However, all
+new features in v0.92 will not reflect on v0.9 unless the corresponding
+extra pins are wired externally.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../v0_9/" class="btn btn-neutral float-left" title="v0.9"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../advanced/arduino_process_gen/" class="btn btn-neutral float-right" title="Writing programs with Arduino script">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../v0_9/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../advanced/arduino_process_gen/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

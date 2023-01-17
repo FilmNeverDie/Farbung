@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://FilmNeverDie.github.io/Farbung/circuit/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Description - FilmNeverDie — CP800 Wiki</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Description";
+        var mkdocs_page_input_path = "circuit/index.md";
+        var mkdocs_page_url = "/Farbung/circuit/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> FilmNeverDie — CP800 Wiki
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../software/">Software</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Circuit</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Description</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#list-of-features-in-planning">List of features in planning</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="v0_9/">v0.9</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="v0_92/">v0.92</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Advanced</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../advanced/arduino_process_gen/">Writing programs with Arduino script</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">FilmNeverDie — CP800 Wiki</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Circuit &raquo;</li>
+      <li>Description</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="description">Description</h1>
+<p>The CP800 circuit is designed to fulfil the function of developing films
+with drum rolling and it consists of the following requirements</p>
+<p>1)  Control the fluid flow of developing film</p>
+<p>2)  Control the temperature of the fluid</p>
+<p>3)  Control the motor for the rolling action</p>
+<p>4)  User interface</p>
+<h2 id="list-of-features-in-planning">List of features in planning</h2>
+<p>Please read this in conjunction with the software plan, since back-end
+development of the software will be highly tied with the hardware
+development.</p>
+<ul>
+<li>
+<p>Multiple heating element array control, if each storage chemical
+    needs to be kept at a different temperature</p>
+</li>
+<li>
+<p>Temperature PID controller (software)</p>
+</li>
+<li>
+<p>Allow the use of 100VAC, there will be a transformer to step down
+    higher AC voltage to 100VAC, this allows the machine to work in
+    country with a different phase voltage, by converting them all to
+    100VAC.</p>
+</li>
+<li>
+<p>Program the microcontroller to control the backlight of the LCD
+    screen if required. (software)</p>
+</li>
+<li>
+<p>Program that allows a selection to read from the digital input of
+    the Dpad via the serial output from the shift register. (software)</p>
+</li>
+<li>
+<p>Implement an on and off software button using the LED button mounted
+    on the Dpad. (software)</p>
+</li>
+<li>
+<p>Earth all solenoid to a common point.</p>
+</li>
+<li>
+<p>Overvoltage and undervoltage protection</p>
+</li>
+<li>
+<p>Quick self-diagnosis button or additional debugging display (led on
+    communication...etc)</p>
+</li>
+<li>
+<p>Float sensor feedback for each storage tank</p>
+</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../software/" class="btn btn-neutral float-left" title="Software"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="v0_9/" class="btn btn-neutral float-right" title="v0.9">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../software/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="v0_9/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
